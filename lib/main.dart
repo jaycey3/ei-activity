@@ -223,24 +223,63 @@ class _ActivityPageState extends State<ActivityPage> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("ACWR", style: TextStyle(fontSize: 12, color: Colors.grey)),
-                              Text("0.8", style: TextStyle(fontSize: 16, color: Color(0xFF001B2F), fontWeight: FontWeight.bold)),
+                              Text(
+                                "ACWR",
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                              Text(
+                                "0.8",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Color(0xFF001B2F),
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ],
                           ),
                           SizedBox(width: 16),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("Acute workload", style: TextStyle(fontSize: 12, color: Colors.grey)),
-                              Text("22", style: TextStyle(fontSize: 16, color: Color(0xFF001B2F), fontWeight: FontWeight.bold)),
+                              Text(
+                                "Acute workload",
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                              Text(
+                                "22",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Color(0xFF001B2F),
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ],
                           ),
                           SizedBox(width: 16),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("Chronic workload", style: TextStyle(fontSize: 12, color: Colors.grey)),
-                              Text("30", style: TextStyle(fontSize: 16, color: Color(0xFF001B2F), fontWeight: FontWeight.bold)),
+                              Text(
+                                "Chronic workload",
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                              Text(
+                                "30",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Color(0xFF001B2F),
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ],
                           ),
                         ],
@@ -250,6 +289,25 @@ class _ActivityPageState extends State<ActivityPage> {
                 ),
               ),
             ),
+
+            const SizedBox(height: 20),
+
+            // Tabs
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  _tabButton("Gaits", 0, Icons.rocket_launch_outlined),
+                  _tabButton("Heart Rate", 1, Icons.favorite_outline),
+                  _tabButton("Elevation", 2, Icons.landscape_outlined),
+                ],
+              ),
+            ),
+
+            const SizedBox(height: 10),
+
+            Expanded(child: _buildTabContent()),
           ],
         ),
       ),
@@ -275,6 +333,78 @@ class _ActivityPageState extends State<ActivityPage> {
           Text(label, style: const TextStyle(fontSize: 12, color: Colors.grey)),
         ],
       ),
+    );
+  }
+
+  Widget _tabButton(String title, int index, IconData icon) {
+    final isSelected = selectedTabIndex == index;
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          selectedTabIndex = index;
+        });
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+        decoration: BoxDecoration(
+          color: isSelected ? Color(0xFF001B2F) : Colors.white,
+          border: Border.all(
+            color: isSelected ? Colors.transparent : Colors.grey[300]!,
+          ),
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Row(
+          children: [
+            Icon(icon, color: isSelected ? Colors.white : Color(0xFF001B2F)),
+            const SizedBox(width: 4),
+            Text(
+              title,
+              style: TextStyle(
+                color: isSelected ? Colors.white : Color(0xFF001B2F),
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTabContent() {
+    switch (selectedTabIndex) {
+      case 0:
+        return _buildGaitsTab();
+      case 1:
+        return _buildHeartRateTab();
+      case 2:
+        return _buildElevationTab();
+      default:
+        return Container();
+    }
+  }
+
+  Widget _buildGaitsTab() {
+    return Column(
+      children: [
+        Center(child: Text("Gaits", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold))),
+      ],
+    );
+  }
+
+  Widget _buildHeartRateTab() {
+    return Column(
+      children: [
+        Center(child: Text("Heart Rate", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold))),
+      ],
+    );
+  }
+
+  Widget _buildElevationTab() {
+    return Column(
+      children: [
+        Center(child: Text("Elevation", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold))),
+      ],
     );
   }
 }
